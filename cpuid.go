@@ -919,6 +919,17 @@ var vendorMapping = map[string]Vendor{
 	"Apple VZ":     Apple,
 }
 
+func CPUInfoManufacturer() string {
+	_, b, c, d := cpuid(0)
+	v := string(valAsString(b, d, c))
+	return v
+}
+
+func CPUInfoProcessID() string {
+	a, _, _, d := cpuid(1)
+	return fmt.Sprintf("%08X%08X", uint32(d), uint32(a))
+}
+
 func vendorID() (Vendor, string) {
 	_, b, c, d := cpuid(0)
 	v := string(valAsString(b, d, c))
